@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RESTU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030307;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);--txt:#e6e6ea;--mute:#5d5d66;--ico:#8b8b93;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--txt);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg svg{position:absolute;inset:-10%;width:120%;height:120%;filter:blur(14px);opacity:.9;animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-2%,-1%,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.06)}}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,3,.65))}
+
+/* splash */
+#splash{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(3,3,7,.35);cursor:pointer;transition:opacity .7s ease,visibility .7s}
+#splash.hide{opacity:0;visibility:hidden}
+.glass{width:100%;max-width:430px;padding:46px 20px 40px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:center}
+.glass .mark{width:84px;height:84px;margin:0 auto 14px;opacity:.75}
+.glass .pe{font-size:16px;letter-spacing:.06em;color:#6d6d75;font-weight:500}
+.tap{display:flex;align-items:center;gap:14px;margin-top:34px;color:#4d4d55;font-size:12px;letter-spacing:.38em;font-weight:500}
+.tap::before,.tap::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+
+/* sound */
+#snd{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:max(18px,calc(50% - 232px));z-index:30;width:54px;height:54px;border-radius:50%;border:0;background:rgba(255,255,255,.05);color:#7c7c85;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(8px)}
+#snd svg{width:24px;height:24px}
+#snd.off .waves{display:none}
+
+/* page */
+main{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:28px 18px 56px;display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(8px);transition:opacity .8s .15s,transform .8s .15s}
+main.show{opacity:1;transform:none}
+.avatar{width:84px;height:84px;margin-top:22px;border-radius:50%;background:radial-gradient(circle,#15151b,#0a0a0f);border:1px solid rgba(255,255,255,.05);display:grid;place-items:center;box-shadow:0 0 40px rgba(0,0,0,.6)}
+.avatar svg{width:50px;height:50px;opacity:.7}
+h1{margin:22px 0 0;font-size:30px;font-weight:800;color:#8e8e96;letter-spacing:-.01em}
+.bio{margin:14px 0 0;font-size:14px;color:#4a4a52;font-weight:500;text-align:center}
+.soc{display:flex;gap:28px;margin:28px 0 0}
+.soc a{color:#6f6f78;display:grid;place-items:center;width:42px;height:42px;transition:color .2s,transform .2s}
+.soc a:hover,.soc a:focus-visible{color:#c9c9d0;transform:translateY(-2px);outline:0}
+.soc svg{width:36px;height:36px}
+.links{width:100%;display:flex;flex-direction:column;gap:16px;margin-top:40px}
+.link{display:flex;align-items:center;gap:16px;padding:16px 18px;min-height:82px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:inherit;text-decoration:none;transition:background .2s,border-color .2s,transform .15s}
+.link:hover,.link:focus-visible{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.16);outline:0}
+.link:active{transform:scale(.985)}
+.lic{flex:0 0 46px;width:46px;height:46px;display:grid;place-items:center;border-radius:50%}
+.lic svg{width:32px;height:32px}
+.txt{flex:1;min-width:0}
+.txt b{display:block;font-size:17px;font-weight:700;color:#8a8a92;letter-spacing:.005em}
+.txt span{display:block;margin-top:3px;font-size:12.5px;line-height:1.35;color:#4f4f57;font-weight:500}
+.ext{flex:0 0 24px;width:24px;height:24px;color:#6a6a73}
+@media (prefers-reduced-motion:reduce){.bg svg{animation:none}main,#splash{transition:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 100 100">
+      <path d="M50 4 94 50 50 96 6 50Z" fill="none" stroke="#9a9aa2" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M36 30h20a12 12 0 0 1 0 24H36zm0 24 22 18" fill="none" stroke="#9a9aa2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ext" viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-9 9M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="yt" viewBox="0 0 24 24"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2C.5 9.1.5 12 .5 12s0 2.9.5 4.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8ZM9.7 15.5v-7l6 3.5Z"/></symbol>
+    <symbol id="tt" viewBox="0 0 24 24"><path fill="currentColor" d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.8V9.1a6.3 6.3 0 1 0 5.4 6.2V8.7a8.2 8.2 0 0 0 4.8 1.5V6.8c-.3 0-.7 0-1-.1Z"/></symbol>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1a14 14 0 0 1-5.8-5.1c-.5-.7-1.5-2-1.5-3.5s.8-2.1 1-2.4.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6-.4.4c-.2.2-.3.4-.1.7.5.9 1.5 1.9 2.7 2.5.3.2.5.1.7-.1l.8-.9c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.4 0 .3 0 .9-.1 1.6Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true">
+  <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#2a2a33" stroke-linecap="round">
+    <path d="M330 40C380 120 330 190 250 190S110 140 60 210 40 350 110 410s200 20 240 70 20 130-60 170-190 30-250 90" stroke-width="26" opacity=".55"/>
+    <path d="M20 90C90 60 200 100 230 160" stroke-width="18" opacity=".35"/>
+    <path d="M60 560C20 620 40 700 120 730" stroke-width="22" opacity=".4"/>
+    <path d="M300 420C360 470 380 560 330 620" stroke-width="20" opacity=".35"/>
+  </svg>
+</div>
+
+<button id="snd" class="off" aria-label="Suara" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z" fill="currentColor"/><g class="waves"><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></g></svg>
+</button>
+
+<div id="splash" role="button" tabindex="0" aria-label="Ketuk untuk masuk">
+  <div class="glass">
+    <svg class="mark"><use href="#logo"/></svg>
+    <div class="pe">Private Experience</div>
+    <div class="tap">TAP ANYWHERE</div>
+  </div>
+</div>
+
+<main id="page">
+  <div class="avatar"><svg><use href="#logo"/></svg></div>
+  <h1>RESTU</h1>
+  <p class="bio">Homo proponit, sed Deus disponit.</p>
+
+  <nav class="soc" aria-label="Sosial media">
+    <a href="https://www.tiktok.com/@restu_stur" target="_blank" rel="noopener" aria-label="TikTok"><svg><use href="#tt"/></svg></a>
+    <a href="https://www.youtube.com/@restu_stur" target="_blank" rel="noopener" aria-label="YouTube"><svg><use href="#yt"/></svg></a>
+    <a href="https://whatsapp.com/channel/0029VbDNc6gEgGfOSV7NBI2X" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#wa"/></svg></a>
+  </nav>
+
+  <section class="links">
+    <a class="link" href="https://www.youtube.com/@restu_stur" target="_blank" rel="noopener">
+      <span class="lic" style="color:#c93a3a"><svg><use href="#yt"/></svg></span>
+      <span class="txt"><b>YT RESTU</b><span>YT ME</span></span>
+      <svg class="ext"><use href="#ext"/></svg>
+    </a>
+    <a class="link" href="https://www.tiktok.com/@restu_stur" target="_blank" rel="noopener">
+      <span class="lic" style="color:#cfcfd6"><svg><use href="#tt"/></svg></span>
+      <span class="txt"><b>TT RESTU</b><span>TIKTOK ME</span></span>
+      <svg class="ext"><use href="#ext"/></svg>
+    </a>
+    <a class="link" href="https://sociabuzz.com/restu_gns0/tribe" target="_blank" rel="noopener">
+      <span class="lic"><svg viewBox="0 0 32 32"><path d="M9 11c0-3 3-5 7-5s7 2 7 5M23 21c0 3-3 5-7 5s-7-2-7-5" fill="none" stroke="#2fb67c" stroke-width="3.5" stroke-linecap="round"/><path d="M9 11c0 4 14 3 14 8" fill="none" stroke="#3b8bd9" stroke-width="3.5" stroke-linecap="round"/></svg></span>
+      <span class="txt"><b>SOCIALBUZZ</b><span>DONATE ME</span></span>
+      <svg class="ext"><use href="#ext"/></svg>
+    </a>
+    <a class="link" href="https://whatsapp.com/channel/0029VbDNc6gEgGfOSV7NBI2X" target="_blank" rel="noopener">
+      <span class="lic" style="color:#25a35a"><svg><use href="#wa"/></svg></span>
+      <span class="txt"><b>RESTU COMMUNTIY</b><span>MODPACK FREE DI SINI</span></span>
+      <svg class="ext"><use href="#ext"/></svg>
+    </a>
+  </section>
+</main>
+
+<script>
+(function(){
+  var splash=document.getElementById('splash'),page=document.getElementById('page'),snd=document.getElementById('snd');
+  function enter(){
+    if(splash.classList.contains('hide'))return;
+    splash.classList.add('hide');
+    page.classList.add('show');
+  }
+  splash.addEventListener('click',enter);
+  splash.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();enter();}});
+  snd.addEventListener('click',function(){
+    var off=snd.classList.toggle('off');
+    snd.setAttribute('aria-pressed',String(!off));
+  });
+})();
+</script>
+</body>
+</html>
